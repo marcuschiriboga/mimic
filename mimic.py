@@ -57,7 +57,9 @@ def create_mimic_dict(filename):
                 if txt[word] in d:
                     d[txt[word]].append(txt[word+1])
                 else:
-                    d.update({txt[word]: [txt[word+1]]})
+                    d.update({txt[word]: [txt[word + 1]]})
+        # d.update({txt[-1]: [""]})  # improper solution to keyerror: "knows"
+        # print(d)
     return d
 
 
@@ -71,13 +73,25 @@ def print_mimic_random(mimic_dict, num_words):
         - Repeat this process num_words times
     """
     # +++your code here+++
-    print(mimic_dict)
+    # print(mimic_dict)
     mimic_random_sentence = ""
     start_word = ""
     # new_word = ""
     mimic_random_sentence += mimic_dict[start_word][0]
-    print(mimic_random_sentence)
-    return mimic_random_sentence
+    new_word = mimic_dict[start_word][0]
+    #  the value/index of loop doesn't matter. we are just running it _ times.
+    for _ in range(num_words - 1):
+        # if word in dict, run code, else set new_word to empty string.
+        # this gaurd clause protects the empty cell.
+        if new_word in mimic_dict:
+            new_word = random.choice(mimic_dict[new_word])
+            mimic_random_sentence += " " + new_word
+        else:
+            mimic_random_sentence += " " + new_word
+            new_word = ""
+    print(mimic_random_sentence, end=" ")
+    # print(len(mimic_random_sentence.split()), end=" ")
+    return
 
 
 def main(args):
